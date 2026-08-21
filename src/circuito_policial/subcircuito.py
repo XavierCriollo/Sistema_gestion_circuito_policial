@@ -20,4 +20,8 @@ class Subcircuito:
         return self.__turnos
 
     def agregar_turno(self, turno):
-        self.__turnos.append(turno)
+        if len(self.__turnos) < 3:
+            self.__turnos.append(turno)
+            print("Turno agregado al subcircuito.")
+        else:
+            print("El subcircuito ya tiene 3 turnos asignados.")

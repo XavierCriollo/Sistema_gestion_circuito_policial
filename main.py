@@ -45,11 +45,10 @@ policia2 = ServidorPolicial(
     "Disponible"    
 )
   
-turno1 = Turno(
-    "Turno 1",
-    "06:00",
-    "13:00"
-)
+turno1 = Turno("Turno 1", "06:00", "13:00")
+turno2 = Turno("Turno 2", "13:00", "21:00")
+turno3 = Turno("Turno 3", "21:00", "06:00")
+turno4 = Turno("Turno Extra", "13:00", "18:00")
 
 turno1.agregar_servidor(policia1)
 turno1.agregar_servidor(policia2)
@@ -61,9 +60,13 @@ subcircuito1 = Subcircuito(
 )
 
 subcircuito1.agregar_turno(turno1)
+subcircuito1.agregar_turno(turno2)
+subcircuito1.agregar_turno(turno3)
+subcircuito1.agregar_turno(turno4)
 
 print("\n--- Información del Subcircuito ---")
 
 print("Subcircuito:", subcircuito1.get_nombre())
+print("Placa:", subcircuito1.get_vehiculo().get_placa())
 print("Vehículo:", subcircuito1.get_vehiculo().get_modelo())
 print("Estado vehículo:", subcircuito1.get_vehiculo().get_estado())
