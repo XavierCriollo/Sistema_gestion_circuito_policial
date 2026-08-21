@@ -2,6 +2,8 @@ from circuito_policial.servidor_policial import ServidorPolicial
 from circuito_policial.vehiculo import Vehiculo
 from circuito_policial.turno import Turno
 from circuito_policial.subcircuito import Subcircuito
+from circuito_policial.directivo import Directivo
+from circuito_policial.tecnico_operativo import TecnicoOperativo
 
 policia1 = ServidorPolicial(
     "Luis Criollo",
@@ -70,3 +72,29 @@ print("Subcircuito:", subcircuito1.get_nombre())
 print("Placa:", subcircuito1.get_vehiculo().get_placa())
 print("Vehículo:", subcircuito1.get_vehiculo().get_modelo())
 print("Estado vehículo:", subcircuito1.get_vehiculo().get_estado())
+
+directivo1 = Directivo(
+    "Carlos Andrade",
+    "D001",
+    "Capitan",
+    "Disponible"
+)
+
+tecnico1 = TecnicoOperativo(
+    "Juan Perez",
+    "TO001",
+    "Sargento Primero",
+    "Disponible"
+)
+
+print("\n--- Directivo ---")
+print("Nombre:", directivo1.get_nombre())
+print("Identificacion:", directivo1.get_identificacion())
+print("Grado:", directivo1.get_grado())
+print("Estado:", directivo1.get_estado())
+
+print("\n--- Tecnico Operativo ---")
+print("Nombre:", tecnico1.get_nombre())
+print("Identificacion:", tecnico1.get_identificacion())
+print("Grado:", tecnico1.get_grado())
+print("Estado:", tecnico1.get_estado())
