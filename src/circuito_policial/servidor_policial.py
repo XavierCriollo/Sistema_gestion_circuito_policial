@@ -1,4 +1,6 @@
-class ServidorPolicial:
+from abc import ABC, abstractmethod
+
+class ServidorPolicial(ABC):
     def __init__(self, nombre, identificacion, grado, estado):
         self.__nombre = nombre
         self.__identificacion = identificacion
@@ -28,3 +30,7 @@ class ServidorPolicial:
 
     def set_estado(self, estado):
         self.__estado = estado
+        
+        @abstractmethod
+        def mostrar_funcion(self):
+            pass

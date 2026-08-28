@@ -18,3 +18,6 @@ class Directivo(ServidorPolicial):
             raise ValueError("El grado no corresponde a un Directivo")
 
         super().__init__(nombre, identificacion, grado, estado)
+        
+    def mostrar_funcion(self):
+        return "Direccion, supervision y mando"   

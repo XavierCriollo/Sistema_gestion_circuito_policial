@@ -98,3 +98,17 @@ print("Nombre:", tecnico1.get_nombre())
 print("Identificacion:", tecnico1.get_identificacion())
 print("Grado:", tecnico1.get_grado())
 print("Estado:", tecnico1.get_estado())
+
+print("\n--- Aplicacion del poliformismo ---")
+
+servidores = [directivo1, tecnico1]
+
+for servidor in servidores:
+    print(
+        servidor.get_grado(),
+        servidor.get_nombre(),
+        "-",
+        servidor.mostrar_funcion()
+    )
+    
+    

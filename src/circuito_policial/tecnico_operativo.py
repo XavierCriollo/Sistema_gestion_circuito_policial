@@ -21,3 +21,6 @@ class TecnicoOperativo(ServidorPolicial):
             )
 
         super().__init__(nombre, identificacion, grado, estado)
+        
+    def mostrar_funcion(self):
+        return "Ejecucion de operaciones y actividades policiales"
