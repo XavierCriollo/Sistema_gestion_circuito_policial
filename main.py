@@ -370,7 +370,7 @@ base_datos.guardar_servidor(
 
 print("\n--- Servidores almacenados en SQLite ---")
 
-servidores_db = base_datos.consultar_servidores()
+servidores_db = base_datos.listar_servidores()
 
 for servidor in servidores_db:
     print(
@@ -384,3 +384,51 @@ for servidor in servidores_db:
         "-",
         servidor[4]
     )
+    
+print("\n--- Buscar servidor en SQLite ---")
+
+servidor_db = base_datos.buscar_servidor("TO001")
+
+if servidor_db:
+    print("Servidor encontrado:")
+    print("Identificación:", servidor_db[0])
+    print("Nombre:", servidor_db[1])
+    print("Tipo:", servidor_db[2])
+    print("Grado:", servidor_db[3])
+    print("Estado:", servidor_db[4])
+else:
+    print("Servidor no encontrado.")
+    
+print("\n--- Actualizar servidor en SQLite ---")
+
+base_datos.actualizar_servidor(
+    "TO001",
+    "Juan Perez",
+    "TecnicoOperativo",
+    "Sargento Primero",
+    "Servicio"
+)
+
+print("\n--- Verificar actualización en SQLite ---")
+
+servidor_actualizado = base_datos.buscar_servidor("TO001")
+
+if servidor_actualizado:
+    print("Identificación:", servidor_actualizado[0])
+    print("Nombre:", servidor_actualizado[1])
+    print("Tipo:", servidor_actualizado[2])
+    print("Grado:", servidor_actualizado[3])
+    print("Estado:", servidor_actualizado[4])
+    
+print("\n--- Eliminar servidor en SQLite ---")
+
+base_datos.eliminar_servidor("TO002")
+
+print("\n--- Verificar eliminación en SQLite ---")
+
+servidor_eliminado = base_datos.buscar_servidor("TO002")
+
+if servidor_eliminado is None:
+    print("El servidor TO002 ya no existe en la base de datos.")
+else:
+    print("El servidor TO002 todavía existe.")
