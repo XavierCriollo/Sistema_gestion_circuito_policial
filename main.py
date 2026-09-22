@@ -4,7 +4,7 @@ from circuito_policial.subcircuito import Subcircuito
 from circuito_policial.directivo import Directivo
 from circuito_policial.tecnico_operativo import TecnicoOperativo
 from circuito_policial.catalogo_servidores import CatalogoServidores
-
+from circuito_policial.base_datos import BaseDatos
 
 # --------------------------------------------------
 # SERVIDOR POLICIAL - DIRECTIVO
@@ -322,3 +322,65 @@ if servidor_verificado:
     print("Nombre:", servidor_verificado.get_nombre())
     print("Grado:", servidor_verificado.get_grado())
     print("Estado:", servidor_verificado.get_estado())
+    
+# --------------------------------------------------
+# PERSISTENCIA CON SQLITE
+# --------------------------------------------------
+
+print("\n--- Base de Datos SQLite ---")
+
+base_datos = BaseDatos()
+
+base_datos.crear_tabla_servidores()
+
+print("\n--- Guardar datos de prueba en SQLite ---")
+
+base_datos.guardar_servidor(
+    "D001",
+    "Carlos Andrade",
+    "Directivo",
+    "Capitan",
+    "Disponible"
+)
+
+base_datos.guardar_servidor(
+    "D002",
+    "Maria Torres",
+    "Directivo",
+    "Teniente",
+    "Servicio"
+)
+
+base_datos.guardar_servidor(
+    "TO001",
+    "Juan Perez",
+    "TecnicoOperativo",
+    "Sargento Primero",
+    "Disponible"
+)
+
+base_datos.guardar_servidor(
+    "TO002",
+    "Pedro Ramirez",
+    "TecnicoOperativo",
+    "Cabo Primero",
+    "Servicio"
+)
+
+
+print("\n--- Servidores almacenados en SQLite ---")
+
+servidores_db = base_datos.consultar_servidores()
+
+for servidor in servidores_db:
+    print(
+        servidor[0],
+        "-",
+        servidor[1],
+        "-",
+        servidor[2],
+        "-",
+        servidor[3],
+        "-",
+        servidor[4]
+    )
