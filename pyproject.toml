@@ -7,7 +7,10 @@ authors = [
     { name = "luis_criollo_uees", email = "luisxavier_23@hotmail.com" }
 ]
 requires-python = ">=3.13"
-dependencies = []
+dependencies = [
+    "flet>=1.0.0",
+    "pydantic>=2.13.5",
+]
 
 [project.scripts]
 circuito-policial = "circuito_policial:main"

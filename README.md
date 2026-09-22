@@ -2,49 +2,82 @@
 
 ## Descripción
 
-El **Sistema de Gestión de Circuito Policial** es un proyecto desarrollado en **Python** con el objetivo de modelar, mediante Programación Orientada a Objetos (POO), los elementos que intervienen en la organización y funcionamiento de un circuito policial, para lo cual se crearon clases para representar elementos del sistema como servidor policial, vehículo, turno, subcircuito, directivo y técnico operativo.
+Sistema desarrollado en **Python** para representar y gestionar elementos básicos de un circuito policial.
 
-Se aplicó encapsulación mediante atributos privados, getters y setters; composición para relacionar los objetos; y herencia, donde ServidorPolicial es la clase padre de Directivo y TecnicoOperativo, para lo que dicha solución ha sido desarrollada de forma incremental, incorporando encapsulación, composición, herencia, clases abstractas y polimorfismo.
-
-## Objetivo
-
-Desarrollar una solución orientada a objetos que permita representar de forma estructurada los componentes principales de un circuito policial, aplicando conceptos fundamentales de diseño y programación.
+El proyecto ha sido desarrollado de forma incremental aplicando Programación Orientada a Objetos, colecciones, genéricos, validación de datos, persistencia en SQLite e interfaz gráfica.
 
 ## Características principales
 
 - Gestión de servidores policiales.
 - Clasificación en `Directivo` y `TecnicoOperativo`.
-- Gestión de vehículos y turnos de servicio.
-- Organización de información mediante subcircuitos.
-- Validación de grados según el tipo de servidor policial.
-- Modelado de relaciones entre las diferentes clases.
+- Validación de grados según el tipo de servidor.
+- Gestión de vehículos, turnos y subcircuitos.
+- Catálogo de servidores mediante colecciones.
+- Validación de datos con Pydantic.
+- Persistencia de información en SQLite.
+- Interfaz gráfica desarrollada con Flet.
+- Operaciones CRUD desde la interfaz gráfica.
 
-## Conceptos de POO aplicados
+## Conceptos aplicados
 
-El proyecto implementa los siguientes conceptos:
+### Programación Orientada a Objetos
 
-- **Encapsulación:** protección de atributos mediante métodos `get` y `set`.
-- **Composición:** relación entre objetos como subcircuitos, vehículos y turnos.
+- **Encapsulación:** atributos privados mediante métodos `get` y `set`.
+- **Composición:** relaciones entre subcircuitos, vehículos y turnos.
 - **Herencia:** `Directivo` y `TecnicoOperativo` heredan de `ServidorPolicial`.
 - **Abstracción:** `ServidorPolicial` funciona como clase base abstracta.
-- **Polimorfismo:** cada tipo de servidor policial implementa su propio comportamiento.
+- **Polimorfismo:** cada tipo de servidor implementa su propio comportamiento.
+
+### Colecciones y genéricos
+
+El catálogo de servidores utiliza tres tipos de colecciones:
+
+- `list`: almacena y permite listar los servidores.
+- `dict`: permite buscar servidores mediante su identificación.
+- `set`: controla que las identificaciones sean únicas.
+
+La clase `CatalogoServidores` utiliza `Generic` y `TypeVar` para trabajar con objetos de tipo `ServidorPolicial` y sus clases derivadas.
+
+### Interfaz gráfica y eventos
+
+La interfaz fue desarrollada con **Flet** e implementa las operaciones:
+
+- Guardar servidor.
+- Buscar servidor.
+- Listar servidores.
+- Actualizar servidor.
+- Eliminar servidor.
+
+Los botones y controles de selección utilizan eventos para ejecutar las diferentes operaciones.
+
+Los datos ingresados son validados con **Pydantic** antes de ser procesados.
 
 ## Tecnologías
 
 - Python 3
+- Flet
+- Pydantic
+- SQLite
+- uv
 - Git y GitHub
 - Visual Studio Code
 - UML con Draw.io
 
 ## Ejecución
 
-Desde la raíz del proyecto:
+Desde la raíz del proyecto, instalar las dependencias:
 
 ```bash
-uv run main.py
----
+uv sync
+```
 
-## Estructura general del proyecto
+Ejecutar la interfaz gráfica:
+
+```bash
+uv run src/circuito_policial/interfaz.py
+```
+
+## Estructura principal
 
 ```text
 circuito_policial/
@@ -52,6 +85,7 @@ circuito_policial/
 ├── main.py
 ├── README.md
 ├── pyproject.toml
+├── circuito_policial.db
 │
 └── src/
     └── circuito_policial/
@@ -61,4 +95,15 @@ circuito_policial/
         ├── tecnico_operativo.py
         ├── vehiculo.py
         ├── turno.py
-        └── subcircuito.py
+        ├── subcircuito.py
+        ├── catalogo_servidores.py
+        ├── validaciones.py
+        ├── base_datos.py
+        └── interfaz.py
+```
+
+## Estado del proyecto
+
+El sistema cuenta actualmente con un catálogo de servidores policiales, validación de datos, almacenamiento mediante SQLite e interfaz gráfica con operaciones CRUD.
+
+El proyecto integra los conceptos desarrollados durante las diferentes etapas manteniendo una estructura preparada para futuras ampliaciones.
