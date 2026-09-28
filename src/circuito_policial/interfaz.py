@@ -4,6 +4,9 @@ from pydantic import ValidationError
 from circuito_policial.base_datos import BaseDatos
 from circuito_policial.validaciones import ServidorPolicialData
 
+from circuito_policial.servidor_repository import ServidorRepository
+from circuito_policial.gestion_novedades import GestionNovedades
+
 
 def main(page: ft.Page):
 
@@ -21,6 +24,9 @@ def main(page: ft.Page):
 
     base_datos = BaseDatos()
     base_datos.crear_tabla_servidores()
+    
+    repository = ServidorRepository(base_datos)
+    gestion_novedades = GestionNovedades(repository)
 
     # ---------------------------------------------------------
     # TÍTULOS
@@ -408,6 +414,101 @@ def main(page: ft.Page):
     )
 
     # ---------------------------------------------------------
+    # GESTIÓN DE NOVEDADES - SEMANA 7
+    # COLA FIFO
+    # ---------------------------------------------------------
+
+    campo_novedad = ft.TextField(
+        label="Descripción de la novedad",
+        width=430,
+    )
+
+    mensaje_novedad = ft.Text("")
+
+    siguiente_novedad = ft.Text(
+        "Siguiente novedad: Ninguna"
+    )
+
+    cantidad_novedades = ft.Text(
+        "Novedades pendientes: 0"
+    )
+
+    def actualizar_estado_cola():
+        cantidad = gestion_novedades.cantidad_novedades()
+
+        cantidad_novedades.value = (
+            f"Novedades pendientes: {cantidad}"
+        )
+
+        siguiente = gestion_novedades.consultar_siguiente()
+
+        if siguiente is None:
+            siguiente_novedad.value = (
+                "Siguiente novedad: Ninguna"
+            )
+        else:
+            siguiente_novedad.value = (
+                f"Siguiente novedad: {siguiente}"
+            )
+
+    def registrar_novedad(e):
+
+        if not campo_novedad.value:
+            mensaje_novedad.value = (
+                "Ingrese una descripción de la novedad."
+            )
+            page.update()
+            return
+
+        gestion_novedades.registrar_novedad(
+            campo_novedad.value
+        )
+
+        mensaje_novedad.value = (
+            "Novedad registrada correctamente."
+        )
+
+        campo_novedad.value = ""
+
+        actualizar_estado_cola()
+        page.update()
+
+    def atender_novedad(e):
+
+        novedad = gestion_novedades.atender_novedad()
+
+        if novedad is None:
+            mensaje_novedad.value = (
+                "No existen novedades pendientes."
+            )
+        else:
+            mensaje_novedad.value = (
+                f"Novedad atendida: {novedad}"
+            )
+
+        actualizar_estado_cola()
+        page.update()
+
+    boton_registrar_novedad = ft.Button(
+        content="Registrar novedad",
+        on_click=registrar_novedad,
+    )
+
+    boton_atender_novedad = ft.Button(
+        content="Atender siguiente",
+        on_click=atender_novedad,
+    )
+
+    botones_novedades = ft.Row(
+        controls=[
+            boton_registrar_novedad,
+            boton_atender_novedad,
+        ],
+        spacing=10,
+    )
+    
+    
+    # ---------------------------------------------------------
     # AGREGAR CONTROLES A LA INTERFAZ
     # ---------------------------------------------------------
 
@@ -429,6 +530,25 @@ def main(page: ft.Page):
             weight=ft.FontWeight.BOLD,
         ),
         tabla_servidores,
+        
+        ft.Divider(),
+
+        ft.Text(
+            "Gestión de Novedades",
+            size=20,
+            weight=ft.FontWeight.BOLD,
+        ),
+
+        ft.Text(
+            "Cola de atención FIFO",
+            size=14,
+        ),
+
+        campo_novedad,
+        botones_novedades,
+        siguiente_novedad,
+        cantidad_novedades,
+        mensaje_novedad,
     )
 
     # ---------------------------------------------------------
